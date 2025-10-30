@@ -1,2 +1,13 @@
 # Task-Displayer
 An App for displaying tasks on a big screen with remote task entry
+Here is how to get it working (hopefully):
+First off, download and install Cloudflare on the desired host device. (Obviously make sure the right app for the right OS is being installed.) Make sure to store this application (or a shortcut to it) in a safe place where it will not be moved away from and remember where it is.
+Also download and install Python.
+Then gain access to the actual script for the Task Displayer App (you probably also need the ‘TD_completed_list_template’ file) and open in in a code editor. I recommend using VS-Code, using a different code editor works too but some steps might vary. In Vs-Code, in the extensions tab (button on the left-hand side) you should install the following extensions: Python, Pylance and PYQT Integration. Now, open a terminal and type the command ‘pip install PyQt5’ and ‘pip install flask’. This should take care last few needed extensions. 
+Now what you need to do is navigate to that safely stored Cloudflare Application (or shortcut) and copy the path. On Windows, you should be able to do so by right clicking on it and pressing “copy as path” or alternatively “Properties -> General” and then manually copy the path next to “Location:”.
+This path now needs to be replaced with the existing path in the Task Displayer App’s code, (currently) found in line 658. It should look something like this:
+ cloudflared_path = r’(replace with path to your Cloudflare)’
+Please do not touch any of the other code!
+After saving with CTRL+S, this script should now be functional, just press the run button in the top right to launch the app. But I recommend to turn this into an executable app to launch with a simple click rather than with the direct script. To do that you need to, in the terminal in VS-Code, type ‘pip install pyinstaller’. Then type ‘cd (replace with path to the location in which the code is saved)’. This should change the terminal directory to the correct one. Then, lastly, type ‘pyinstaller –onefile (replace with name of script)’ This should create and executable to launch the app upon clicking like any other app.
+
+And that should be it. Alongside of the Displayer, a Terminal should open showing the booting of the flask and cloudflared. Please give it a moment, it will then provide you the (currently randomly generated) link to access the Web interface you need to submit / complete tasks. Then just keep the Displayer window open at full screen. The rest should be pretty self-explanatory, I did my best to make the design simple and understandable yet functional.

@@ -344,7 +344,7 @@ def history():
                 completed_short = f"[{dt2.strftime('%d/%m/%y %H:%M')}]"
             except Exception:
                 completed_short = f"[{completed_at}]"
-    tasks.append({'name': name, 'priority': priority, 'timestamp_short': ts_short, 'completed_short': completed_short, 'confirm_number': confirm_number})
+        tasks.append({'name': name, 'priority': priority, 'timestamp_short': ts_short, 'completed_short': completed_short, 'confirm_number': confirm_number})
     template = COMPLETED_LIST.replace('font-size:12px', f'font-size:{TIMESTAMP_FONT_SIZE}px')
     return render_template_string(template, tasks=tasks)
 

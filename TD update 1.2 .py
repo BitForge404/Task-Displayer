@@ -139,18 +139,18 @@ TASK_LIST = '''
     <style>
         :root{--bg:#f7f8fb;--card:#fff;--accent:#1976d2;--muted:#6b6f76}
         *{box-sizing:border-box}
-        body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);padding:14px}
-        .wrap{max-width:780px;margin:0 auto}
-        header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-        h1{margin:0;font-size:18px;color:#222}
-        .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(20,20,30,0.04)}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);padding:14px;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+    .wrap{max-width:780px;width:100%;margin:0 auto;padding:0 8px}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    h1{margin:0;font-size:18px;color:#222}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(20,20,30,0.04);overflow:hidden}
         ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
         li{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:10px;border:1px solid #eef2f7;background:var(--card)}
         .meta{display:flex;flex-direction:column;width:100%}
         .ts{color:var(--muted);font-size:12px;margin-bottom:2px}
         .title{display:flex;gap:8px;align-items:flex-start;width:100%}
         .priority{font-weight:700;color:#222;white-space:nowrap}
-        .name{color:#222;word-wrap:break-word;line-height:1.4;flex:1}
+    .name{color:#222;overflow-wrap:anywhere;word-break:break-word;white-space:normal;line-height:1.4;flex:1}
         form{display:flex;gap:8px;align-items:center;width:100%;padding-top:4px}
         input[type=number],input[type=text]{padding:8px;border-radius:8px;border:1px solid #e2e6ef;width:80px}
         .btn{padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer}
@@ -178,7 +178,7 @@ TASK_LIST = '''
                                 <input type="hidden" name="name" value="{{ task.name }}">
                                 <input type="hidden" name="priority" value="{{ task.priority }}">
                                 <input type="hidden" name="timestamp" value="{{ task.timestamp }}">
-                                <input type="number" name="confirm_number" required placeholder="#" style="width:84px" min="0">
+                                <input type="text" name="confirm_number" required placeholder="#" style="width:84px" min="0">
                                 <button class="btn" type="submit">Complete</button>
                             </form>
                         </li>
@@ -344,7 +344,7 @@ def history():
                 completed_short = f"[{dt2.strftime('%d/%m/%y %H:%M')}]"
             except Exception:
                 completed_short = f"[{completed_at}]"
-        tasks.append({'name': name, 'priority': priority, 'timestamp_short': ts_short, 'completed_short': completed_short})
+    tasks.append({'name': name, 'priority': priority, 'timestamp_short': ts_short, 'completed_short': completed_short, 'confirm_number': confirm_number})
     template = COMPLETED_LIST.replace('font-size:12px', f'font-size:{TIMESTAMP_FONT_SIZE}px')
     return render_template_string(template, tasks=tasks)
 
@@ -571,10 +571,10 @@ class DisplayWindow(QtWidgets.QWidget):
             # Format each task with HTML for colors and spacing
             task_html = (
                 f'<div style="margin-bottom: 20px; line-height: 1.8;">'
-                f'<span style="color: #2196F3;">{created}</span>&nbsp;&nbsp;'  # Blue for creation time
-                f'<span style="color: #4CAF50;">{completed}</span>'  # Green for completion time
+                f'<span style="color: #2196F3; white-space: nowrap;">{created}</span>&nbsp;&nbsp;'  # Blue for creation time
+                f'<span style="color: #4CAF50; white-space: nowrap;">{completed}</span>'  # Green for completion time
                 f'{"&nbsp;&nbsp;" if confirm_number else ""}'
-                f'<span style="color: #ff1744; font-weight: bold;">#{confirm_number}</span>&nbsp;&nbsp;'  # Red confirmation number
+                f'<span style="color: #ff1744; font-weight: bold; white-space: nowrap;">#{confirm_number}</span>&nbsp;&nbsp;'  # Red confirmation number
                 f'<span style="font-weight: bold; color: #333;">{priority}:</span>&nbsp;'  # Priority label
                 f'<span style="color: #222;">{html.escape(str(name))}</span>'  # Task name
                 f'</div>'

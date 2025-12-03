@@ -1,5 +1,5 @@
 # Task-Displayer
-An App for displaying tasks on a big screen with remote task entry
+An App for displaying tasks on a big screen with remote task entry.
 Here is how to get it working (hopefully):
 First off, download and install Cloudflare on the desired host device. (Obviously make sure the right app for the right OS is being installed.) Make sure to store this application (or a shortcut to it) in a safe place where it will not be moved away from and remember where it is.
 Also download and install Python.
